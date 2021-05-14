@@ -21,7 +21,7 @@ interface CustomTableProps {
 }
 
 const parseDate = (data: any) => {
-  return new Date(Number(data)).toLocaleDateString();
+  return new Date(data).toLocaleDateString();
 };
 
 const CustomTable: React.FC<CustomTableProps> = ({
@@ -31,71 +31,33 @@ const CustomTable: React.FC<CustomTableProps> = ({
 }) => {
   return (
     <>
-      {data.length ? (
-        <Table size="sm">
-          <TableCaption>Posts Data</TableCaption>
-          <Thead>
-            <Tr>
-              {headers.map((header, index) => (
-                <Th key={index}>{header}</Th>
-              ))}
-            </Tr>
-          </Thead>
-          <Tbody>
-            {data.map((item, index) => (
-              <Tr key={item.id}>
-                <Td>{item?.title || "N/A"}</Td>
-                <Td>{parseDate(item.createdAt)}</Td>
-                <Td>
-                  <Button
-                    onClick={() => handleEdit(item)}
-                    backgroundColor="#8BAAAD"
-                    size="sm"
-                  >
-                    Edit
-                  </Button>
-                </Td>
-              </Tr>
+      <Table size="sm">
+        <TableCaption>Posts Data</TableCaption>
+        <Thead>
+          <Tr>
+            {headers.map((header, index) => (
+              <Th key={index}>{header}</Th>
             ))}
-          </Tbody>
-
-          <Tfoot>
-            <Tr>
-              <Th py="1rem">
+          </Tr>
+        </Thead>
+        <Tbody>
+          {data.map((item, index) => (
+            <Tr key={item.id}>
+              <Td>{item?.title || "N/A"}</Td>
+              <Td>{parseDate(item.createdAt)}</Td>
+              <Td>
                 <Button
-                  backgroundColor="#4D4847"
-                  onClick={() => true}
-                  color="#fff"
+                  onClick={() => handleEdit(item)}
+                  backgroundColor="#8BAAAD"
+                  size="sm"
                 >
-                  Prev Page
+                  Edit
                 </Button>
-              </Th>
-              <Th></Th>
-              <Th></Th>
-              <Th></Th>
-              <Th></Th>
-              <Th py="1rem">
-                <Button
-                  backgroundColor="#4D4847"
-                  onClick={() => false}
-                  color="#fff"
-                >
-                  Next Page
-                </Button>
-              </Th>
+              </Td>
             </Tr>
-          </Tfoot>
-        </Table>
-      ) : (
-        <Flex justifyContent="center" py="2rem">
-          <Spinner
-            thickness="4px"
-            emptyColor="gray.200"
-            color="blue.500"
-            size="xl"
-          />
-        </Flex>
-      )}
+          ))}
+        </Tbody>
+      </Table>
     </>
   );
 };

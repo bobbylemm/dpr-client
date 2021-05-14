@@ -30,8 +30,12 @@ export const registerAction = createAsyncThunk(
 export const loginAction = createAsyncThunk(
     "auth/login",
     async (payload: any) => {
-        const data = graphQLClient.request(authLogin, payload)
-        return data;
+        try {
+            const data = graphQLClient.request(authLogin, payload)
+            return data;
+        }catch(error) {
+            console.log(error, 'err')
+        }
     }
 );
 

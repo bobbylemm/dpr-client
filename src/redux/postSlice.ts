@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { IPost } from './types'
+import {RootState} from '.';
 import { graphQLClient } from '../graphqlClient/index'
 import { addPost, updatePost } from '../graphqlClient/mutations'
 import { getUserPosts } from '../graphqlClient/queries'
@@ -94,6 +95,6 @@ const postsSlice = createSlice({
   }
 });
 
-export const postSelector = (state: PostState) => state
+export const postSelector = (state: RootState) => state.posts
 
 export default postsSlice.reducer

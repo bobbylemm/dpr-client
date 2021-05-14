@@ -5,6 +5,7 @@ export const getUserPosts = gql`
     posts {
         id
         title
+        createdAt
     }
 }
 `

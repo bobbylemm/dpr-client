@@ -40,7 +40,7 @@ const Navbar = () => {
             Postss
           </Text>
           <HStack as={"nav"} spacing={4} display={{ base: "none", md: "flex" }}>
-            <Link to="/orders">All Orders</Link>
+            <Link to="/posts">All Posts</Link>
           </HStack>
         </HStack>
         <Flex alignItems={"center"}>

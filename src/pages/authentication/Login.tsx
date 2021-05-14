@@ -31,15 +31,26 @@ const Login: React.FC<LoginProps> = () => {
     },
     validationSchema: LoginSchema,
     onSubmit: async (values) => {
-      dispatch(loginAction(values));
-      history.push("/posts");
-      toast({
-        title: "Login successfull.",
-        description: "you were successfully authenticated",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-      });
+      try {
+        dispatch(loginAction(values));
+        history.push("/posts");
+        toast({
+          title: "Login successfull.",
+          description: "you were successfully authenticated",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      } catch (error) {
+        console.log(error, "error");
+        toast({
+          title: "Action Failed",
+          description: "error logging in",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
     },
   });
 

@@ -1,14 +1,15 @@
 import { gql } from 'graphql-request'
 
 export const addPost = gql`
-  mutation CreatePost($payload: { $title: String! }) {
-    createPost(payload: { title: $title, releaseDate: $releaseDate }) {
+  mutation CreatePost($title: String!) {
+    createPost(payload: { title: $title }) {
       title
+      createdAt
     }
   }
 `
 export const updatePost = gql`
-  mutation CreatePost($payload: { id: Int!, $title: String! }) {
+  mutation UpdatePost($id: Float!, $title: String!) {
     updatePost(payload: { id: $id, title: $title }) {
       title
     }
@@ -16,7 +17,7 @@ export const updatePost = gql`
 `
 
 export const authRegister = gql`
-  mutation Register($payload: { $email: String!, $name: String!, $password: String! }) {
+  mutation Register($email: String!, $name: String!, $password: String!) {
     register(payload: { email: $email, name: $name, password: $password }) {
       email
       name
@@ -24,8 +25,8 @@ export const authRegister = gql`
   }
 `
 export const authLogin = gql`
-  mutation Login($payload: { $email: String!, $password: String! }) {
-    register(payload: { email: $email, password: $password }) {
+  mutation Login($email: String!, $password: String!) {
+    login(payload: { email: $email, password: $password }) {
       email
       name
     }

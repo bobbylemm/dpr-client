@@ -33,13 +33,13 @@ const PostsView: React.FC<PostsViewProps> = ({
         backgroundColor="#000F08"
         flexDirection="column"
       >
-        <Flex mb="1rem" justifyContent="flex-end" width="60%">
+        <Flex mb="1rem" justifyContent="flex-end" width="50%">
           <Button size="md" color="#1C3738" onClick={handleOpenModal}>
             New Post
           </Button>
         </Flex>
         <Box
-          width="60%"
+          width="50%"
           backgroundColor="#F4FFF8"
           p="1rem"
           borderRadius=".4rem"
