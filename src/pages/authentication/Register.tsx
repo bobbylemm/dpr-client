@@ -1,17 +1,19 @@
 import React from "react";
 import { useToast } from "@chakra-ui/react";
 import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 import { RegisterView } from "../../components/presentational";
-// import { login } from "../../apis/authentication";
+import { registerAction } from "../../redux/authSlice";
 
 interface LoginProps {}
 
 const Register: React.FC<LoginProps> = () => {
   const history = useHistory();
   const toast = useToast();
+  const dispatch = useDispatch();
 
   const LoginSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
@@ -29,15 +31,15 @@ const Register: React.FC<LoginProps> = () => {
     },
     validationSchema: LoginSchema,
     onSubmit: async (values) => {
-      //   await login(values);
-      //   history.push("/orders");
-      //   toast({
-      //     title: "Login successfull.",
-      //     description: "you were successfully authenticated",
-      //     status: "success",
-      //     duration: 5000,
-      //     isClosable: true,
-      //   });
+      dispatch(registerAction(values));
+      history.push("/posts");
+      toast({
+        title: "Registered successfully.",
+        description: "you were successfully registered",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
     },
   });
 

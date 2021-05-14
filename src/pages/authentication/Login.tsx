@@ -2,15 +2,20 @@ import React from "react";
 import { useToast } from "@chakra-ui/react";
 import { useHistory } from "react-router";
 import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 
 import { LoginView } from "../../components/presentational";
+import { loginAction, authSelector } from "../../redux/authSlice";
 
 interface LoginProps {}
 
 const Login: React.FC<LoginProps> = () => {
   const history = useHistory();
   const toast = useToast();
+  const dispatch = useDispatch();
+
+  const { status } = useSelector(authSelector);
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email().required("Email required"),
@@ -26,15 +31,15 @@ const Login: React.FC<LoginProps> = () => {
     },
     validationSchema: LoginSchema,
     onSubmit: async (values) => {
-      // await login(values);
-      // history.push("/orders");
-      // toast({
-      //   title: "Login successfull.",
-      //   description: "you were successfully authenticated",
-      //   status: "success",
-      //   duration: 5000,
-      //   isClosable: true,
-      // });
+      dispatch(loginAction(values));
+      history.push("/posts");
+      toast({
+        title: "Login successfull.",
+        description: "you were successfully authenticated",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
     },
   });
 
