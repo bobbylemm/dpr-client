@@ -17,11 +17,16 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
 
-const Navbar = () => {
+interface NavbarProps {
+  logout: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ logout }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const history = useHistory();
 
-  const logout = async () => {
+  const logoutFn = async () => {
+    logout();
     history.push("/login");
   };
 
@@ -49,7 +54,7 @@ const Navbar = () => {
             size={"sm"}
             mr={4}
             leftIcon={<AddIcon />}
-            onClick={logout}
+            onClick={logoutFn}
           >
             Logout
           </Button>

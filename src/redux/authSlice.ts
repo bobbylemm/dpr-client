@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { IPost } from './types'
+import { RootState } from '.';
 import { graphQLClient } from '../graphqlClient/index'
-import { authLogin, authRegister } from '../graphqlClient/mutations'
+import { authLogin, authRegister, authLogut } from '../graphqlClient/mutations'
 import { getLoggedInUser } from '../graphqlClient/queries'
 
 type User = { email: string, name: string }
@@ -10,12 +10,14 @@ type User = { email: string, name: string }
 type AuthState = {
     status: "loading" | "idle";
     error: string | null;
+    isLoggedIn: boolean;
     user: User;
 };
 
 const initialState = {
     user: { email: "", name: "" },
     error: null,
+    isLoggedIn: true,
     status: "idle",
 } as AuthState;
 
@@ -43,6 +45,14 @@ export const isLoggedIn = createAsyncThunk(
     "auth/me",
     async () => {
         const data = graphQLClient.request(getLoggedInUser)
+        return data;
+    }
+);
+
+export const logOut = createAsyncThunk(
+    "auth/logout",
+    async () => {
+        const data = graphQLClient.request(authLogut)
         return data;
     }
 );
@@ -78,9 +88,21 @@ const authSlice = createSlice({
             state.error = "error during login";
             state.status = "idle";
         });
+        builder.addCase(isLoggedIn.fulfilled, (state, { payload }) => {
+            state.isLoggedIn = true
+            state.error = null;
+        });
+        builder.addCase(isLoggedIn.rejected, (state) => {
+            state.error = "You need to login";
+            state.isLoggedIn = false
+        });
+        builder.addCase(logOut.fulfilled, (state) => {
+            state.user = { email: "", name: "" }
+            state.error = null;
+        });
     }
 });
 
-export const authSelector = (state: AuthState) => state
+export const authSelector = (state: RootState) => state.auth
 
 export default authSlice.reducer

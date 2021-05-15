@@ -32,3 +32,9 @@ export const authLogin = gql`
     }
   }
 `
+
+export const authLogut = gql`
+  mutation Logout {
+    logout
+  }
+`
